@@ -1,43 +1,95 @@
 'use strict';
 
-//arguments object
+console.log('App.js is running');
 
-// const add = function(a, b){
-//     console.log(arguments);
-//     return a + b;
-// };
-// console.log(add(55, 1, 1001));
-
-var add = function add(a, b) {
-    //console.log(arguments);
-    return a + b;
+var app = {
+    title: 'Indecision App',
+    subtitle: 'Put your life in the hands of a computer',
+    options: ['One', 'Two']
 };
-console.log(add(55, 1, 1001));
 
-//this keyword
+var template = React.createElement(
+    'div',
+    null,
+    React.createElement(
+        'h1',
+        null,
+        app.title
+    ),
+    app.subtitle && React.createElement(
+        'p',
+        null,
+        app.subtitle
+    ),
+    app.options.length > 0 ? React.createElement(
+        'p',
+        null,
+        'Here are your option'
+    ) : React.createElement(
+        'p',
+        null,
+        'No options'
+    ),
+    React.createElement(
+        'ol',
+        null,
+        React.createElement(
+            'li',
+            null,
+            'Item one'
+        ),
+        React.createElement(
+            'li',
+            null,
+            'Item two'
+        )
+    )
+);
 
-var user = {
-    name: 'Andrew',
-    cities: ['Philadelphia', 'New York', 'Dublin'],
-    printPlacesLived: function printPlacesLived() {
-        var _this = this;
-
-        return this.cities.map(function (city) {
-            return _this.name + ' has lived in ' + city;
-        });
-    }
+var count = 0;
+var addOne = function addOne() {
+    count++;
+    renderCounterApp();
 };
-console.log(user.printPlacesLived());
-
-var multiplier = {
-    number: [1, 2, 3],
-    multiplyBy: 3,
-    multiply: function multiply() {
-        var _this2 = this;
-
-        return this.number.map(function (num) {
-            return num * _this2.multiplyBy;
-        });
-    }
+var minusOne = function minusOne() {
+    count--;
+    renderCounterApp();
 };
-console.log(multiplier.multiply());
+var reset = function reset() {
+    count = 0;
+    renderCounterApp();
+};
+
+var appRoot = document.getElementById('app');
+
+var renderCounterApp = function renderCounterApp() {
+    var templateTwo = React.createElement(
+        'div',
+        null,
+        React.createElement(
+            'h1',
+            null,
+            'Count: ',
+            count
+        ),
+        React.createElement(
+            'button',
+            { onClick: addOne },
+            '+1'
+        ),
+        React.createElement(
+            'button',
+            { onClick: minusOne },
+            '-1'
+        ),
+        React.createElement(
+            'button',
+            { onClick: reset },
+            'Reset'
+        )
+    );
+
+    ReactDOM.render(templateTwo, appRoot);
+};
+
+renderCounterApp();
